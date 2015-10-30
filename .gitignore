@@ -229,3 +229,11 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
+
+*.pyc
+*.txt
+*.zip
+back_fib.py
+back.py
