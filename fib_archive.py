@@ -1,4 +1,7 @@
-﻿from bisect import bisect
+﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from bisect import bisect
 from BitsFlow import BitStreamReader, BitStreamWriter
 
 
@@ -35,7 +38,7 @@ class FibonacciArchiver(object):
             index = 0
             while number:
                 n_index = bisect(self.fib_series, number) - 1
-                print number, self.fib_series[n_index]
+                if verbose: print number, self.fib_series[n_index]
                 number -= self.fib_series[n_index]
 
                 if verbose:
@@ -76,7 +79,7 @@ class FibonacciArchiver(object):
             if bit and bits and bits[-1]:                
                 if verbose:
                     bits.append(bit)
-                    print ''.join(str(b) for b in bits)
+                    if verbose: print ''.join(str(b) for b in bits)
                     bits = bits[:-1]
 
                 number = 0

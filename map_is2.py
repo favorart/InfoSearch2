@@ -19,16 +19,16 @@ for line in sys.stdin:
 
     id, doc = line.strip().split()
     html = decompress(b64decode(doc))
-    html = html.decode('utf8', 'ignore')
-
+    
     try:
+	html = html.decode('utf8', 'ignore')
         bs = bs4.BeautifulSoup(html, 'html.parser')
+	text = bs.get_text()
     except:
         continue
-    text = bs.get_text()
-
-    text = re.sub(ur'[^a-zа-яё0-9]', ur' ', text.lower())
-    text = re.sub(ur'[ ]+', ur' ', text.lower())
+    
+    text = re.sub(ur'[^a-zР°-СЏС‘0-9]', ur' ', text.lower())
+    text = re.sub(ur'[ ]+', ur' ', text)
 
     words = text.split(u' ')
     for word in [ w for w in list(set(words)) if len(w) > 2 ]:
