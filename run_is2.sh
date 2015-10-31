@@ -9,7 +9,7 @@ OUTPUT='infosearch2'
 hadoop fs -rm -r ${OUTPUT}
 hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming.jar \
     -D mapreduce.name='InfoSearch2' \
-    -file map_is2.py red_is2.py fibarchive.py sarchive.py BitsFlow.py bs123.zip \
+    -file map_is2.py red_is2.py bs123.zip \
     -mapper 'map_is2.py' \
     -reducer 'red_is2.py f' \
     -numReduceTasks 1 \

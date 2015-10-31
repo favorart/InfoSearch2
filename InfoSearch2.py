@@ -1,4 +1,7 @@
-﻿import sys
+﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
 import codecs
 import numpy as np
 
@@ -36,17 +39,12 @@ import s9_archive
 """
 
 
-# import sys  
-# reload(sys)  
-# sys.setdefaultencoding('utf-8')
+# all, 1_10, 1_100
+docs_file = 'C:\\Users\\MainUser\\Downloads\\Cloud.mail\\povarenok.ru\\1_1000\\docs-000.txt'
+urls_file = 'C:\\Users\\MainUser\\Downloads\\Cloud.mail\\povarenok.ru\\1_1000\\urls.txt'
 
-# sys.stdin = codecs.getreader('utf-8')(sys.stdin)
 if __name__ == '__main__':
-
-    # all, 1_10, 1_100
-    docs_file = 'C:\\Users\\MainUser\\Downloads\\Cloud.mail\\povarenok.ru\\1_1000\\docs-000.txt'
-    urls_file = 'C:\\Users\\MainUser\\Downloads\\Cloud.mail\\povarenok.ru\\1_1000\\urls.txt'
-
+    
     if    sys.argv[1] == 's':
         decoder =  s9_archive.Simple9Archiver()
     elif  sys.argv[1] == 'f':
@@ -54,19 +52,26 @@ if __name__ == '__main__':
     else:  raise ValueError
 
     print 'query=',
-    query = sys.stdin.readline().encode('utf-8') # .encode('utf-8')
-    # print query.encode('cp866')
+    if sys.platform.startswith('win'):
+        query = unicode(sys.stdin.readline(), 'cp866')
+    else:
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        query = unicode( sys.stdin.readline() )
+
     query_words = query.split()
 
     w_offsets = {}
-    with codecs.open('./data/index.txt', 'r', encoding='utf-8') as index:
-        for line in index.readlines():
+    index_name = sys.argv[2] if len(sys.argv) > 2 else './data/index.txt'
+    with codecs.open(index_name, 'r', encoding='utf-8') as f_index:
+        for line in f_index.readlines():
             word, offset, size = line.strip().split()
             w_offsets[word] = (offset, size)
 
     answer = set()
     oper = ''
-    with open('./data/backward.bin', 'rb') as data:
+    backward_name = sys.argv[3] if len(sys.argv) > 3 else './data/backward.bin'
+    with open(backward_name, 'rb') as f_backward:
         for q in query_words:
             if   q == 'AND' or q == 'OR'or q == 'NOT':
                 oper = q
@@ -74,27 +79,23 @@ if __name__ == '__main__':
                 offset, size = w_offsets[q]
                 offset, size = int(offset), int(size)
 
-                data.seek(offset)
-                coded = data.read(size)
+                f_backward.seek(offset)
+                coded = f_backward.read(size)
                 decoded = set(decoder.decode(coded))
                 # print decoded
 
-                if not answer:
-                    answer = decoded
-                elif oper == 'AND':
-                    answer &= decoded
-                elif oper == 'OR':
-                    answer |= decoded
-                elif oper == 'NOT':
-                    answer -= decoded
-                else:
-                    break
+                if      not answer : answer  = decoded
+                elif oper == 'AND' : answer &= decoded
+                elif oper == 'OR'  : answer |= decoded
+                elif oper == 'NOT' : answer -= decoded
+                else: break
 
     urls = []
-    with open(urls_file, 'r') as f_urls:
+    urls_name = sys.argv[4] if len(sys.argv) > 4 else urls_file
+    with open(urls_name, 'r') as f_urls:
         for line in f_urls.readlines():
             id, url = line.strip().split()
             urls.append(url)
 
     # print answer
-    print '\n'.join([ urls[i] for i in answer ])
+    print '\n', '\n'.join([ urls[i] for i in answer ]), '\n'

@@ -7,16 +7,18 @@ from operator import itemgetter
 import codecs
 import sys
 
-from fibarchive import FibonacciArchiver
-from sarchive import Simple9Archiver
+import zipimport
+importer = zipimport.zipimporter('bs123.zip')
+fib_archive = importer.load_module('fib_archive')
+s9_archive = importer.load_module('s9_archive')
 
 
 if   (sys.argv[1] == 'f'): a = True
 elif (sys.argv[1] == 's'): a = False
 else: raise ValueError
 
-if a: fib = FibonacciArchiver(199460)  # all_docs=199456
-else: spl = Simple9Archiver()
+if a: fib = fib_archive.FibonacciArchiver(199460)  # all_docs=199456
+else: spl =  s9_archive.Simple9Archiver()
 
 sys.stdin  = codecs.getreader('utf-8')(sys.stdin)
 sys.stdout = codecs.getwriter('utf-8')(sys.stdout)

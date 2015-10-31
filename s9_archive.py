@@ -1,4 +1,10 @@
-﻿from BitsFlow import BitStreamReader, BitStreamWriter
+﻿#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import zipimport
+importer = zipimport.zipimporter('bs123.zip')
+BitsFlow = importer.load_module('BitsFlow')
+from BitsFlow import BitStreamReader, BitStreamWriter
 
 
 class Simple9Archiver(object):

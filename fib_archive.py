@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from bisect import bisect
+import zipimport
+importer = zipimport.zipimporter('bs123.zip')
+BitsFlow = importer.load_module('BitsFlow')
 from BitsFlow import BitStreamReader, BitStreamWriter
 
 

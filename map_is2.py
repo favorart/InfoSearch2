@@ -21,9 +21,9 @@ for line in sys.stdin:
     html = decompress(b64decode(doc))
     
     try:
-	html = html.decode('utf8', 'ignore')
+        html = html.decode('utf8', 'ignore')
         bs = bs4.BeautifulSoup(html, 'html.parser')
-	text = bs.get_text()
+        text = bs.get_text()
     except:
         continue
     
