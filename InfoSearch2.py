@@ -39,18 +39,18 @@ import s9_archive
 """
 
 
-# all, 1_10, 1_100
-docs_file = 'C:\\Users\\MainUser\\Downloads\\Cloud.mail\\povarenok.ru\\1_1000\\docs-000.txt'
-urls_file = 'C:\\Users\\MainUser\\Downloads\\Cloud.mail\\povarenok.ru\\1_1000\\urls.txt'
+if    sys.argv[1] == 's':
+    decoder =  s9_archive.Simple9Archiver()
+elif  sys.argv[1] == 'f':
+    decoder = fib_archive.FibonacciArchiver(199460) # all_docs=199456
+else:  raise ValueError
+
+bin_name = sys.argv[2] if len(sys.argv) > 2 else './data/backward.bin'
+ndx_name = sys.argv[3] if len(sys.argv) > 3 else './data/index.txt'
+url_name = sys.argv[4] if len(sys.argv) > 4 else 'C:\\Users\\MainUser\\Downloads\\Cloud.mail\\povarenok.ru\\all\\urls.txt'
 
 if __name__ == '__main__':
     
-    if    sys.argv[1] == 's':
-        decoder =  s9_archive.Simple9Archiver()
-    elif  sys.argv[1] == 'f':
-        decoder = fib_archive.FibonacciArchiver(199460) # all_docs=199456
-    else:  raise ValueError
-
     print 'query=',
     if sys.platform.startswith('win'):
         query = unicode(sys.stdin.readline(), 'cp866')
@@ -62,21 +62,20 @@ if __name__ == '__main__':
     query_words = query.split()
 
     w_offsets = {}
-    index_name = sys.argv[2] if len(sys.argv) > 2 else './data/index.txt'
-    with codecs.open(index_name, 'r', encoding='utf-8') as f_index:
+    with codecs.open(ndx_name, 'r', encoding='utf-8') as f_index:
         for line in f_index.readlines():
             word, offset, size = line.strip().split()
             w_offsets[word] = (offset, size)
 
     answer = set()
     oper = ''
-    backward_name = sys.argv[3] if len(sys.argv) > 3 else './data/backward.bin'
-    with open(backward_name, 'rb') as f_backward:
+    
+    with open(bin_name, 'rb') as f_backward:
         for q in query_words:
             if   q == 'AND' or q == 'OR'or q == 'NOT':
                 oper = q
             else:
-                offset, size = w_offsets[q]
+                offset, size = w_offsets[q.lower()]
                 offset, size = int(offset), int(size)
 
                 f_backward.seek(offset)
@@ -91,8 +90,7 @@ if __name__ == '__main__':
                 else: break
 
     urls = []
-    urls_name = sys.argv[4] if len(sys.argv) > 4 else urls_file
-    with open(urls_name, 'r') as f_urls:
+    with open(url_name, 'r') as f_urls:
         for line in f_urls.readlines():
             id, url = line.strip().split()
             urls.append(url)

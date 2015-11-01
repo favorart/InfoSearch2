@@ -14,7 +14,7 @@
     <RootNamespace>InfoSearch2</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>s</CommandLineArguments>
+    <CommandLineArguments> s</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <InterpreterArguments>
     </InterpreterArguments>
@@ -59,6 +59,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="run_is2.sh">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="using">
       <SubType>Code</SubType>
     </Content>
   </ItemGroup>

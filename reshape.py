@@ -6,33 +6,37 @@ import codecs
 import sys
 import os
 
-from s9_archive import Simple9Archiver
-from fib_archive import FibonacciArchiver
 
-if   (sys.argv[1] == 'f'): a = True
-elif (sys.argv[1] == 's'): a = False
-else: raise ValueError
-
-if a: fib = FibonacciArchiver(199460)  # all_docs=199456
-else:  s9 =   Simple9Archiver()
-
-#  2 files:
-#     + (word  offset  size) concat
-#     + bin_archived_(back_index)_concat-ed
+verbose = False
+if verbose:
+    if   (sys.argv[1] == 'f'):
+        import  s9_archive
+        archiver = fib_archive.FibonacciArchiver (199460)  # all_docs=199456
+    elif (sys.argv[1] == 's'):
+        import fib_archive
+        archiver =  s9_archive.Simple9Archiver   ()
+    else:
+        raise ValueError
 
 if not os.path.exists('data'):
     os.makedirs('data')
 
-with open('./data/backward.bin', 'wb') as fdata:
-    with codecs.open('./data/index.txt', 'w', encoding='utf-8') as findex:
-        for line in codecs.open(sys.argv[1] if len(sys.argv) > 1 else './data/reduced.txt', 'r', encoding='utf-8'):
-            word, coded = line.strip().split()
+dat_name = sys.argv[2] if len(sys.argv) > 2 else './data/reduced.txt'
+bin_name = sys.argv[3] if len(sys.argv) > 3 else './data/backward.bin'
+ndx_name = sys.argv[4] if len(sys.argv) > 4 else './data/index.txt'
 
-            data = b64decode(coded)
-            if check:
-                if a: print fib.decode(data)
-                else: print  s9.decode(data)
+#  2 files:
+#     + (word  offset  size) concat
+#     + bin_archived_(back_index)_concat-ed
+with open(bin_name, 'wb') as f_bin:
+    with codecs.open(ndx_name, 'w', encoding='utf-8') as f_index:
+        with codecs.open(dat_name, 'r', encoding='utf-8') as f_data:
+            for line in f_data:
+                word, coded = line.strip().split()
 
-            print >>findex, u'%s\t%d\t%d' % (word, fdata.tell(), len(data))
-            fdata.write(data)
+                data = b64decode(coded)
+                if verbose: print archiver.decode(data)
+
+                print >>f_index, u'%s\t%d\t%d' % (word, f_bin.tell(), len(data))
+                f_bin.write(data)
 

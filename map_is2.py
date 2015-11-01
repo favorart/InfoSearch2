@@ -27,7 +27,7 @@ for line in sys.stdin:
     except:
         continue
     
-    text = re.sub(ur'[^a-zР°-СЏС‘0-9]', ur' ', text.lower())
+    text = re.sub(ur'[^a-zа-яё0-9]', ur' ', text.lower())
     text = re.sub(ur'[ ]+', ur' ', text)
 
     words = text.split(u' ')
