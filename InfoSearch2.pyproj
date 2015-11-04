@@ -14,7 +14,7 @@
     <RootNamespace>InfoSearch2</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments> s</CommandLineArguments>
+    <CommandLineArguments> s ./data/lenta_index.txt ./data/lenta_bin.bin "C:\Users\MainUser\Downloads\Cloud.mail\lenta.ru\1_1000\urls.txt"</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <InterpreterArguments>
     </InterpreterArguments>

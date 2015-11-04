@@ -3,7 +3,7 @@
 
 import sys
 import codecs
-import numpy as np
+# import numpy as np
 
 import fib_archive
 import s9_archive
@@ -42,7 +42,7 @@ import s9_archive
 if    sys.argv[1] == 's':
     decoder =  s9_archive.Simple9Archiver()
 elif  sys.argv[1] == 'f':
-    decoder = fib_archive.FibonacciArchiver(199460) # all_docs=199456
+    decoder = fib_archive.FibonacciArchiver( max(199460, 564550) ) # all_docs= povarenok:199456, lenta:564548
 else:  raise ValueError
 
 bin_name = sys.argv[2] if len(sys.argv) > 2 else './data/backward.bin'
@@ -80,8 +80,13 @@ if __name__ == '__main__':
 
                 f_backward.seek(offset)
                 coded = f_backward.read(size)
-                decoded = set(decoder.decode(coded))
+                decoded = decoder.decode(coded)
+
+                for i in xrange(1, len(decoded)):
+                    decoded[i] += decoded[i-1]
+
                 # print decoded
+                decoded = set(decoded)
 
                 if      not answer : answer  = decoded
                 elif oper == 'AND' : answer &= decoded

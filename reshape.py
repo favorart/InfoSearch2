@@ -11,7 +11,7 @@ verbose = False
 if verbose:
     if   (sys.argv[1] == 'f'):
         import  s9_archive
-        archiver = fib_archive.FibonacciArchiver (199460)  # all_docs=199456
+        archiver = fib_archive.FibonacciArchiver ( max(199460, 564550) ) # all_docs= povarenok:199456, lenta:564548
     elif (sys.argv[1] == 's'):
         import fib_archive
         archiver =  s9_archive.Simple9Archiver   ()

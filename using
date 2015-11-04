@@ -1,8 +1,0 @@
-﻿
-hadoop run_is2.sh
-# map_is2.py, 'red_is2.py f|s'
-
-f|s - фибоначчи или simple9
-
-python      reshape.py <f|s> <in_data_path> <out_binary_path> <out_index_path>
-python  InfoSearch2.py <f|s> <in_binary_path> <in_index_path> <in_urls_path>
