@@ -236,3 +236,4 @@ back_fib.py
 back.py
 *.bin
 /data/*
+mapped.txt
