@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b4bf6746-f105-4621-8349-a1ec9ab6af44</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>InfoSearch2.py</StartupFile>
+    <StartupFile>test.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -14,7 +14,7 @@
     <RootNamespace>InfoSearch2</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments> s ./data/lenta_index.txt ./data/lenta_bin.bin "C:\Users\MainUser\Downloads\Cloud.mail\lenta.ru\1_1000\urls.txt"</CommandLineArguments>
+    <CommandLineArguments>s</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <InterpreterArguments>
     </InterpreterArguments>
@@ -53,6 +53,9 @@
     <Compile Include="s9_archive.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="test.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="run.bat">
@@ -61,9 +64,7 @@
     <Content Include="run_is2.sh">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="using">
-      <SubType>Code</SubType>
-    </Content>
+    <Content Include="using.txt" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
