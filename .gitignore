@@ -235,5 +235,6 @@ $RECYCLE.BIN/
 back_fib.py
 back.py
 *.bin
-/data/*
+data/*
 mapped.txt
+infosearch2_povarenok/*

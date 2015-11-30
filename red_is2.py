@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from base64 import b64encode
@@ -11,16 +10,14 @@ import zipimport
 importer = zipimport.zipimporter('bs123.zip')
 
 
-# if   (sys.argv[1] == 'f'):
-#     module = importer.load_module('fib_archive')
-#     archiver = module.FibonacciArchiver( max(199460, 564550) ) # all_docs= povarenok:199456, lenta:564548
-# elif (sys.argv[1] == 's'):
-#     module = importer.load_module('s9_archive')
-#     archiver = module.Simple9Archiver()
-# else: raise ValueError
+if   (sys.argv[1] == 'f'):
+    module = importer.load_module('fib_archive')
+    archiver = module.FibonacciArchiver( max(199460, 564550) ) # all_docs= povarenok:199456, lenta:564548
+elif (sys.argv[1] == 's'):
+    module = importer.load_module('s9_archive')
+    archiver = module.Simple9Archiver()
+else: raise ValueError
 
-import s9_archive
-archiver = s9_archive.Simple9Archiver()
 
 sys.stdin  = codecs.getreader('utf-8')(sys.stdin)
 sys.stdout = codecs.getwriter('utf-8')(sys.stdout)

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from base64 import b64decode
@@ -24,9 +23,18 @@ def reshape(dat_name, ndx_name, bin_name, verbose=False):
     """
     with open(bin_name, 'wb') as f_bin:
         with codecs.open(ndx_name, 'w', encoding='utf-8') as f_index:
-            with codecs.open(dat_name, 'r', encoding='utf-8') as f_data:
-                for line in f_data:
-                    word, coded = line.strip().split()
+
+            sys.stdin  = codecs.getreader('utf-8')(sys.stdin)
+            # sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
+            # sys.stdin codecs.open('.\data\mapped.txt', 'r', encoding='utf-8')
+            # for word, group in groupby((line.strip().split('\t', 1) for line in sys.stdin), itemgetter(0)):
+            for line in sys.stdin:
+            # with codecs.open(dat_name, 'r', encoding='utf-8') as f_data:
+                # for line in f_data:
+
+                splt = line.strip().split()
+                if len(splt) > 1:
+                    word, coded = splt
 
                     data = b64decode(coded)
                     if verbose: print archiver.decode(data)
